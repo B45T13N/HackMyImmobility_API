@@ -13,7 +13,6 @@
         public Boolean EaseCare { get; set; }
         public Boolean EaseDoctor { get; set; }
         public Boolean EaseMarket { get; set; }
-        public Boolean EaseTransport { get; set; }
         public String Email { get; set; }
         public String URL { get; set; }
         public String Description { get; set; }
