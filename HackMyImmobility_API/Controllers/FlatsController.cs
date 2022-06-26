@@ -24,11 +24,16 @@ namespace HackMyImmobility_API.Controllers
             List<Flat> flatsList = context.Flats.ToList();
             if (flatsList.Any())
             {
-                var result = "";
+                var result = "[";
                 foreach (Flat item in flatsList)
                 {
                     result += JObject.FromObject(item);
+                    if(item != flatsList[flatsList.Count()-1])
+                    {
+                        result += ",";
+                    }
                 }
+                result += "]";
                 return result.ToString();
             }
             else
@@ -69,21 +74,21 @@ namespace HackMyImmobility_API.Controllers
 
             Flat newFlat = new Flat
             {
-                Address = requestFlat["address"].ToString(),
-                EaseWheelchair = bool.Parse(requestFlat["easeWheelChair"].ToString()),
-                EaseBlind = bool.Parse(requestFlat["easeBlind"].ToString()),
-                EasePartiallyBlind = bool.Parse(requestFlat["easePartiallyBlind"].ToString()),
-                EaseDeaf = bool.Parse(requestFlat["easeDeaf"].ToString()),
-                EaseMental = bool.Parse(requestFlat["easeMental"].ToString()),
-                EaseElderlyPeople = bool.Parse(requestFlat["easeElderlyPeople"].ToString()),
-                EaseAmputee = bool.Parse(requestFlat["easeAmputee"].ToString()),
-                EaseCare = bool.Parse(requestFlat["easeCare"].ToString()),
-                EaseDoctor = bool.Parse(requestFlat["easeDoctor"].ToString()),
-                EaseMarket = bool.Parse(requestFlat["easeMarket"].ToString()),
-                Email = requestFlat["email"].ToString(),
-                Description = requestFlat["description"].ToString(),
-                Lat = double.Parse(requestFlat["lat"].ToString()),
-                Lng = double.Parse(requestFlat["lng"].ToString()),
+                address = requestFlat["address"].ToString(),
+                easeWheelchair = bool.Parse(requestFlat["easeWheelChair"].ToString()),
+                easeBlind = bool.Parse(requestFlat["easeBlind"].ToString()),
+                easePartiallyBlind = bool.Parse(requestFlat["easePartiallyBlind"].ToString()),
+                easeDeaf = bool.Parse(requestFlat["easeDeaf"].ToString()),
+                easeMental = bool.Parse(requestFlat["easeMental"].ToString()),
+                easeElderlyPeople = bool.Parse(requestFlat["easeElderlyPeople"].ToString()),
+                easeAmputee = bool.Parse(requestFlat["easeAmputee"].ToString()),
+                easeCare = bool.Parse(requestFlat["easeCare"].ToString()),
+                easeDoctor = bool.Parse(requestFlat["easeDoctor"].ToString()),
+                easeMarket = bool.Parse(requestFlat["easeMarket"].ToString()),
+                email = requestFlat["email"].ToString(),
+                description = requestFlat["description"].ToString(),
+                lat = double.Parse(requestFlat["lat"].ToString()),
+                lng = double.Parse(requestFlat["lng"].ToString()),
             };
 
             if (requestFlat["url"] != null)
@@ -115,43 +120,43 @@ namespace HackMyImmobility_API.Controllers
 
             if (requestFilter["easeWheelChair"] != null && bool.Parse(requestFilter["easeWheelChair"].ToString())== true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseWheelchair == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeWheelchair == true).ToList();
             } 
             else if (requestFilter["easeBlind"] != null && bool.Parse(requestFilter["easeBlind"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseBlind == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeBlind == true).ToList();
             }
             else if (requestFilter["easePartiallyBlind"] != null && bool.Parse(requestFilter["easePartiallyBlind"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EasePartiallyBlind == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easePartiallyBlind == true).ToList();
             }
             else if (requestFilter["easeDeaf"] != null &&  bool.Parse(requestFilter["easeDeaf"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseDeaf == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeDeaf == true).ToList();
             }
             else if (requestFilter["easeMental"] != null && bool.Parse(requestFilter["easeMental"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseMental == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeMental == true).ToList();
             }
             else if (requestFilter["easeElderlyPeople"] != null && bool.Parse(requestFilter["easeElderlyPeople"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseElderlyPeople == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeElderlyPeople == true).ToList();
             }
             else if (requestFilter["easeAmputee"] != null && bool.Parse(requestFilter["easeAmputee"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseAmputee == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeAmputee == true).ToList();
             }
             else if (requestFilter["easeCare"] != null && bool.Parse(requestFilter["easeCare"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseCare == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeCare == true).ToList();
             }
             else if (requestFilter["easeMarket"] != null && bool.Parse(requestFilter["easeMarket"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseMarket == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeMarket == true).ToList();
             }
             else if (requestFilter["easeDoctor"] != null && bool.Parse(requestFilter["easeDoctor"].ToString()) == true)
             {
-                listFilteredFlats = context.Flats.Where(f => f.EaseDoctor == true).ToList();
+                listFilteredFlats = context.Flats.Where(f => f.easeDoctor == true).ToList();
             }
 
             if (requestFilter.ContainsKey("distance") || Int32.Parse(requestFilter["distance"].ToString()) >= 0)
@@ -165,7 +170,7 @@ namespace HackMyImmobility_API.Controllers
                 var lngMin = lng0 - (180 / Math.PI) * (dist / 6378137)/Math.Cos(Math.PI / 180.0 * lat0);
                 var lngMax = lng0 + (180 / Math.PI) * (dist / 6378137)/Math.Cos(Math.PI / 180.0 * lat0);
 
-                listFilteredFlats = context.Flats.Where(f => latMin < f.Lat).Where(f => f.Lat < latMax).Where(f => lngMin < f.Lng).Where(f => f.Lng < lngMax).ToList();
+                listFilteredFlats = context.Flats.Where(f => latMin < f.lat).Where(f => f.lat < latMax).Where(f => lngMin < f.lng).Where(f => f.lng < lngMax).ToList();
             }
 
             listFilteredFlats = listFilteredFlats.Distinct().ToList();
